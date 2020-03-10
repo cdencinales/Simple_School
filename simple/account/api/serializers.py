@@ -3,14 +3,14 @@ from account.models import Account
 
 class RegistrationSerializer(serializers.ModelSerializer):
     
-    password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True)
+    password2 = serializers.CharField(style={'input_type': 'password'}, write_only=True) 
 
     class Meta:
         model = Account
-        fields = ['email', 'username', 'password', 'password2']
-        extra_kwargs = {
-            'password': {'write_only': True}
-        }
+        fields = ['email', 'username', 'password', 'password2'] #or ['__all__'] if the id field is to be added.
+        extra_kwargs = {                       
+            'password': {'write_only': True}   
+        }                                       
 
 def save(self):
     account = Account(
@@ -19,7 +19,7 @@ def save(self):
     )
     password = self.validated_data['password']
     password2 = self.validated_data['password2']
-
+    
     if password != password2:
         raise serializers.ValidationError({'password': 'Passwords must match.'})
     account.set_password(password)

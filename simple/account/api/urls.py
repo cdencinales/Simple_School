@@ -1,11 +1,15 @@
-from django.urls import path
+from django.urls import path, include
 from account.api.views import(
-
     registration_view,
 )
+from rest_framework import routers
+from account.api.views import *
 
 
 app_name = 'account'
+#(note for dan) consider moving the router from within api/urls.py to its own file within the api app.
+router = routers.DefaultRouter()
+router.register('', AccountViewSet)
 
 urlpatterns = [
     path('register', registration_view, name='register'),

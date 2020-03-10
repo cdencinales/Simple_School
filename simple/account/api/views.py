@@ -4,12 +4,16 @@ from rest_framework.decorators import api_view
 from account.api.serializers import RegistrationSerializer
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import viewsets
+from account.api.serializers import RegistrationSerializer
+from account import models
+
 
 @api_view(['POST',])
 
 def registration_view(request):
     if request.method == 'POST':
-        serializer = RegistrationSerializer(data=request.data)
+        serializer = RegistrationSerializer(data=request.data) 
         data = {}
         if serializer.valid():
             account = serializer.save()
@@ -22,3 +26,8 @@ def registration_view(request):
     
     authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
     permission_clases = [IsAuthenticated]
+    
+#(note for dan) this is where the viewset for the accounts live, consider moving the viewset to its own file aka viewsets.py within the api app.
+class AccountViewSet(viewsets.ModelViewSet):
+    queryset = models.Account.objects.all()
+    serializer_class = RegistrationSerializer
