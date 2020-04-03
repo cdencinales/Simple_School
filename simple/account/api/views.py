@@ -26,8 +26,7 @@ def registration_view(request):
     
     authentication_classes = [TokenAuthentication, SessionAuthentication, BasicAuthentication]
     permission_clases = [IsAuthenticated]
-    
-#(note for dan) this is where the viewset for the accounts live, consider moving the viewset to its own file aka viewsets.py within the api app.
+
 class AccountViewSet(viewsets.ModelViewSet):
     queryset = models.Account.objects.all()
     serializer_class = RegistrationSerializer

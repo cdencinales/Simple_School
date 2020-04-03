@@ -10,7 +10,8 @@ urlpatterns = [
     path('resource/', include(router.urls)),
     path('api/account/', include('account.api.urls', 'account_api')),
     path('api/account/', include('rest_framework.urls')),
-    url(r'^about', TemplateView.as_view(template_name='simple/about.html')) 
+    url(r'^about', TemplateView.as_view(template_name='simple/about.html')),
+    path('api/journal', include('journal.api.urls', 'journal_api')), 
     
 
 ]
